@@ -1,5 +1,5 @@
 from getpass import getpass
-from IGBot import Instagrammer
+from instagrammer import Instagrammer
 from sys import argv
 
 if __name__ == '__main__':
@@ -10,7 +10,7 @@ if __name__ == '__main__':
         username = input('Username: ')
         password = getpass('Password: ')
 
-    bot = IGBot(username, password)
+    bot = Instagrammer(username, password)
 
     bot.login()
 
@@ -19,9 +19,10 @@ if __name__ == '__main__':
 
     print('some people the bucks follow:')
     for account in bot.followeesOf('bucks'):
-        print(' ', account)
+        print('   ', account)
 
-    bot.likeRecentsOf('bucks')
-    bot.unlikeRecentsOf('bucks')
+    for i in range(3):
+        bot.likeRecentsOf('afrooditii')
+        bot.unlikeRecentsOf('afrooditii')
 
     bot.quit()
