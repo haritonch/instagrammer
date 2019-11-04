@@ -1,5 +1,5 @@
 from getpass import getpass
-from IGBot import *
+from IGBot import Instagrammer
 from sys import argv
 
 if __name__ == '__main__':
@@ -13,8 +13,15 @@ if __name__ == '__main__':
     bot = IGBot(username, password)
 
     bot.login()
-    #bot.follow('hazoviolis') # that's me :P
-    #bot.like('B4a2BKep5h-') # that's a photo of mine :P
-    bot.getFollowersOf('hazoviolis')
+
+    bot.unfollow('bucks')
+    bot.follow('bucks')
+
+    print('some people the bucks follow:')
+    for account in bot.followeesOf('bucks'):
+        print(' ', account)
+
+    bot.likeRecentsOf('bucks')
+    bot.unlikeRecentsOf('bucks')
 
     bot.quit()

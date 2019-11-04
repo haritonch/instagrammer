@@ -53,6 +53,28 @@ class IGBot:
             self.quit()
 
 
+    def unfollow(self, some_username):
+        if some_username == self.username:
+            print("You can't unfollow yourself! :P")
+            return
+        self.visit(some_username)
+        smartsleep(2)
+        try:
+            following_button = self.driver.find_element_by_css_selector('button')
+            if following_button.text == 'Follow':
+                print('You are not following', some_username)
+                smartsleep(2)
+            else:
+                following_button.click()
+                xpath = "//button[@class and @tabindex]"
+                unfollow_button = self.driver.find_element_by_xpath(xpath)
+                unfollow_button.click()
+                smartsleep()
+        except:
+            print("I can't find the follow button")
+            self.quit()
+
+
     def seePhoto(self, photo_id):
         self.driver.get('https://www.instagram.com/p/'+ photo_id +'/')
         smartsleep(2)
@@ -131,7 +153,7 @@ class IGBot:
         photo_ids = list(map(lambda element: element.get_attribute('href')[28:-1], photo_elements))
         for photo_id in photo_ids:
             self.like(photo_id)
-        print('I liked', len(photo_ids),  'photos of', some_username)
+        print('I liked the', len(photo_ids),  'most recent photos of', some_username)
 
 
     def unlikeRecentsOf(self, some_username):
