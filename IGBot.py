@@ -36,17 +36,17 @@ class IGBot:
 
     def follow(self, some_username):
         self.visit(some_username)
+        sleep(2)
         try:
             follow_button = self.driver.find_element_by_css_selector('button')
+            if follow_button.text == 'Follow':
+                follow_button.click()
+                sleep(2)
+            else:
+                print('You are already following', some_username)
         except:
             print("can't find the follow button")
             self.quit()
-
-        if follow_button.text == 'Follow':
-            follow_button.click()
-            sleep(2)
-        else:
-            print('You are already following', some_username)
 
 
     def seePhoto(self, photo_id):
@@ -60,7 +60,7 @@ class IGBot:
             xpath = "//span[@aria-label='Like' or @aria-label='Unlike']"
             heart = self.driver.find_elements_by_xpath(xpath)[0]
             if heart.get_attribute('aria-label') == 'Unlike':
-                print('you have already liked the photo with id', photo_id)
+                print('You have already liked the photo with id', photo_id)
             else:
                 heart.click()
                 sleep(1)
