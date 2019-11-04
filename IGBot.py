@@ -57,10 +57,9 @@ class IGBot:
         self.seePhoto(photo_id)
         sleep(2)
         try:
-            xpath = "//div[@role='button']"
-            image = self.driver.find_element_by_xpath(xpath)
-            print(image)
-            image.doubleClick()
+            heart = self.driver.find_element_by_xpath("//span[@aria-label='Like']")
+            heart.click()
+            sleep(2)
         except:
             print("can't find/click the heart button")
             sleep(2)
