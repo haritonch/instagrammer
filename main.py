@@ -17,12 +17,12 @@ if __name__ == '__main__':
     bot.unfollow('bucks')
     bot.follow('bucks')
 
-    print('some people the bucks follow:')
+    print('some accounts the bucks follow:')
     for account in bot.followeesOf('bucks'):
         print('   ', account)
 
     for i in range(3):
-        bot.likeRecentsOf('afrooditii')
-        bot.unlikeRecentsOf('afrooditii')
+        bot.likeRecentsOf('bucks')
+        bot.unlikeRecentsOf('bucks')
 
     bot.quit()
