@@ -57,12 +57,15 @@ class IGBot:
         self.seePhoto(photo_id)
         sleep(2)
         try:
-            heart = self.driver.find_element_by_xpath("//span[@aria-label='Like']")
-            heart.click()
-            sleep(2)
+            xpath = "//span[@aria-label='Like' or @aria-label='Unlike']"
+            heart = self.driver.find_elements_by_xpath(xpath)[0]
+            if heart.get_attribute('aria-label') == 'Unlike':
+                print('you have already liked the photo with id', photo_id)
+            else:
+                heart.click()
+                sleep(1)
         except:
-            print("can't find/click the heart button")
-            sleep(2)
+            print("can't find or click the heart button")
             self.quit()
 
 
