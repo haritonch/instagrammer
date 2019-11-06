@@ -1,9 +1,12 @@
 from smartsleep import smartsleep
 import requests
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 
 class Instagrammer:
+
+
     def __init__(self, username, password):
         self.browserProfile = webdriver.ChromeOptions()
         self.browserProfile.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
@@ -97,6 +100,7 @@ class Instagrammer:
             print("can't find or click the heart button")
             self.quit()
 
+
     def unlike(self, photo_id):
         self.seePhoto(photo_id)
         try:
@@ -113,12 +117,11 @@ class Instagrammer:
             self.quit()
 
 
-    def followersOf(self, some_username):
+    def someFollowersOf(self, some_username):
         # returns a list with some followers of some_username
         self.visit(some_username)
         xpath = "//a[@href='/"  + some_username + "/followers/']"
         followers_button = self.driver.find_element_by_xpath(xpath)
-        print(followers_button.text)
         followers_button.click()
         smartsleep(2)
         xpath = "//a[@class and @title and @href]"
@@ -130,10 +133,10 @@ class Instagrammer:
 
 
     def myFollowers(self):
-        return followersOf(self.username)
+        return somefollowersOf(self.username)
 
 
-    def followeesOf(self, some_username):
+    def somefolloweesOf(self, some_username):
         self.visit(some_username)
         xpath = "//a[@href='/"  + some_username + "/following/']"
         following_button = self.driver.find_element_by_xpath(xpath)
@@ -158,6 +161,10 @@ class Instagrammer:
         print('I liked the', len(photo_ids),  'most recent photos of', some_username)
 
 
+    def likeAllPhotosOf(self, some_username):
+        for photo_id in self.getAllPhotosOf(some_username):
+            self.like(photo_id)
+
     def unlikeRecentsOf(self, some_username):
         self.visit(some_username)
         xpath = "//a[@href]"
@@ -167,6 +174,28 @@ class Instagrammer:
         for photo_id in photo_ids:
             self.unlike(photo_id)
         print('I unliked the', len(photo_ids),  'most recent photos of', some_username)
+
+
+    def getAllPhotosOf(self, some_username):
+        self.visit(some_username)
+        self.scrollToBottom()
+        xpath = "//a[@href]"
+        photo_elements = self.driver.find_elements_by_xpath(xpath)
+        photo_elements = list(filter(lambda element: '/p/' in element.get_attribute('href') , photo_elements))
+        photo_ids = list(map(lambda element: element.get_attribute('href')[28:-1], photo_elements))
+        print(photo_ids)
+        return photo_ids
+
+
+    def scrollToBottom(self):
+        last_height = self.driver.execute_script("return document.body.scrollHeight")
+        while True:
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            smartsleep()
+            new_height = self.driver.execute_script("return document.body.scrollHeight")
+            if new_height == last_height:
+                break
+            last_height = new_height
 
 
     def quit(self):
