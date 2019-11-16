@@ -16,10 +16,6 @@ class Instagrammer:
         self.driver = webdriver.Chrome('./chromedriver')
 
 
-    def driver(self):
-        return self.driver
-
-
     def login(self):
         self.driver.get('https://www.instagram.com/accounts/login/')
         smartsleep(2) # you need to wait for react to build the front end
