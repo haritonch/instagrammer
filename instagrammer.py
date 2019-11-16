@@ -25,7 +25,7 @@ class Instagrammer:
         smartsleep(2) # you need to wait for react to build the front end
         username_field = self.driver.find_element_by_css_selector('input')
         username_field.send_keys(self.username + '\t' + self.password + '\n')
-        smartsleep(2)
+        smartsleep(3)
 
 
     def visit(self, some_username):
@@ -183,8 +183,20 @@ class Instagrammer:
         photo_elements = self.driver.find_elements_by_xpath(xpath)
         photo_elements = list(filter(lambda element: '/p/' in element.get_attribute('href') , photo_elements))
         photo_ids = list(map(lambda element: element.get_attribute('href')[28:-1], photo_elements))
-        print(photo_ids)
         return photo_ids
+
+
+    def comment(self, comment, photo_id):
+        self.seePhoto(photo_id)
+        xpath = "//textarea"
+        comment_element = self.driver.find_element_by_xpath(xpath)
+        comment_element.click()
+        smartsleep()
+        comment_element = self.driver.find_element_by_xpath(xpath)
+        comment_element.send_keys(comment)
+        post_button = self.driver.find_element_by_xpath("//button[@type='submit']")
+        post_button.click()
+        smartsleep(2)
 
 
     def scrollToBottom(self):
