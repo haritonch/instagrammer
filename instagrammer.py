@@ -91,6 +91,18 @@ class Instagrammer:
         smartsleep(2)
 
 
+    def unblock(self, some_username):
+        self.visit(some_username)
+        xpath = "//button"
+        unblockButton = self.driver.find_element_by_xpath(xpath)
+        unblockButton.click()
+        smartsleep(1)
+        xpath = "//button[@tabindex=0]"
+        unblockButton = self.driver.find_element_by_xpath(xpath)
+        unblockButton.click()
+        smartsleep(2)
+
+
     def seePhoto(self, photo_id):
         self.driver.get('https://www.instagram.com/p/'+ photo_id +'/')
         smartsleep(2)
