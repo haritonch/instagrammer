@@ -76,6 +76,19 @@ class Instagrammer:
             self.quit()
 
 
+    def block(self, some_username):
+        self.visit(some_username)
+        xpath = "//span[@aria-label='Options']"
+        optionsButton = self.driver.find_element_by_xpath(xpath)
+        optionsButton.click()
+        xpath = "//button[@tabindex=0]"
+        blockButton = self.driver.find_elements_by_xpath(xpath)[1]
+        blockButton.click()
+        blockButton = self.driver.find_elements_by_xpath(xpath)[0]
+        blockButton.click() # the second time is for the confirmation
+        smartsleep(2)
+
+
     def seePhoto(self, photo_id):
         self.driver.get('https://www.instagram.com/p/'+ photo_id +'/')
         smartsleep(2)
